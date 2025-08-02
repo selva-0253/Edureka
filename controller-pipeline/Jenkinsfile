@@ -1,5 +1,6 @@
 pipeline {
     agent any
+	stages{
 
         stage('Install Docker') {
             steps {
@@ -12,4 +13,5 @@ pipeline {
                 build job: 'Building and runnig docker'
             }
         }
+	}
 }

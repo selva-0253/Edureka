@@ -1,0 +1,10 @@
+pipeline {
+    agent any
+
+        stage('Run Ansible Playbook') {
+            steps {
+                sh 'ansible-playbook -i inventory install_docker.yaml'
+            }
+        }
+    }
+}

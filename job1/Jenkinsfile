@@ -1,0 +1,75 @@
+pipeline {
+    agent { label 'Edureka Project' }  // replace with your agent's label
+	
+	environment {
+        IMAGE_NAME = 'edureka-project-1'
+        CONTAINER_NAME = 'edureka-project-1-container'
+    }
+
+    stages {
+        stage('Preparation') {
+            steps {
+                echo "Running on agent: ${env.NODE_NAME}"
+                sh 'hostname'
+            }
+        }
+
+        stage('Pull from Git') {
+            steps {
+                git url: 'https://github.com/selva-0253/Edureka.git', branch: 'main'
+            }
+        }
+
+        stage('Run PHP Site Build') {
+            steps {
+                sh '''
+                echo "Listing project files:"
+                ls -la
+                '''
+            }
+        }
+	stage('Installing Docker')
+            steps {
+                sh '''
+                    ansible --version
+                    ansible-playbook -i hosts install_docker.yaml
+                '''
+            }
+
+        stage('Docker Build') {
+            steps {
+                sh '''
+                docker build -t $IMAGE_NAME .
+                '''
+            }
+        }
+	 stage('Deploy Container') {
+            steps {
+                sh '''
+                echo "Stopping existing container (if any)..."
+                docker rm -f $CONTAINER_NAME || true
+
+                echo "Running new container..."
+                docker run -d -p 8001:8000 --name $CONTAINER_NAME $IMAGE_NAME
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Cleaning up..."
+        }
+        success {
+            echo "✅ Job completed successfully."
+        }
+        failure {
+            echo "❌ Job failed on agent: ${env.NODE_NAME}"
+	
+            // Cleanup container if build or run failed
+            sh '''
+            docker rm -f $CONTAINER_NAME || true
+            '''
+        }
+    }
+}

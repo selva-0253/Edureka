@@ -12,5 +12,4 @@ pipeline {
                 build job: 'Building and runnig docker'
             }
         }
-    }
 }

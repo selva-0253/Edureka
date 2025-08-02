@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+    PATH = "/usr/local/bin:/usr/bin:${env.PATH}"
+	}
 	stages{
         stage('Run Ansible Playbook') {
             steps {

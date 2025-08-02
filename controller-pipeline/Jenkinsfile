@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+        stage('Install Docker') {
+            steps {
+                build job: 'Installing-docker'
+            }
+        }
+
+        stage('Deploy PHP App') {
+            steps {
+                build job: 'Building and runnig docker'
+            }
+        }
+    }
+}

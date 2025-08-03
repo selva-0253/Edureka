@@ -27,7 +27,7 @@ pipeline {
                 ls -la
                 '''
             }
-        
+        }
 
         stage('Docker Build') {
             steps {
@@ -65,4 +65,5 @@ pipeline {
             '''
         }
     }
+
 }

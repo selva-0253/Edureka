@@ -28,13 +28,6 @@ pipeline {
                 '''
             }
         }
-	stage('Installing Docker')
-            steps {
-                sh '''
-                    ansible --version
-                    ansible-playbook -i hosts install_docker.yaml
-                '''
-            }
 
         stage('Docker Build') {
             steps {

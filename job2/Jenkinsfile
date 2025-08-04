@@ -4,9 +4,11 @@ pipeline {
 	PATH = "/usr/bin:${env.PATH}"
 	}
 	stages{
-        stage('Run Ansible Playbook') {
+        stage('Run Ansible Playbook')
+	{
+	   steps{
             sshagent(credentials: ['ansible-key']) {
-	     steps {
+	     
                 sh 'ansible-playbook -i hosts install_docker.yaml'
             }
         }

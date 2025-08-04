@@ -9,7 +9,7 @@ pipeline {
 	   steps{
             sshagent(credentials: ['ansible-key']) {
 	     
-                sh 'ansible-playbook -i hosts install_docker.yaml' --ssh-extra-args='-o StrictHostKeyChecking=no'
+                sh 'ansible-playbook -i hosts install_docker.yaml' --ssh-extra-args = '-o StrictHostKeyChecking=no'
             }
         }
     }

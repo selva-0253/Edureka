@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment{
 	PATH = "/usr/bin:${env.PATH}"
+	HOSTS = '/home/ec2-user/edureka/ansible/hosts'
 	}
 	stages{
         stage('Run Ansible Playbook')
@@ -9,7 +10,7 @@ pipeline {
 	   steps{
             sshagent(credentials: ['ansible-key']) {
 	     
-                sh 'ansible -i hosts testserver -m ping'
+                sh 'ansible -i $HOSTS testserver -m ping'
             }
         }
     }

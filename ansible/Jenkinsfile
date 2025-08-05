@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{
-	HOSTS = '/home/ec2-user/edureka/ansible/hosts'
+	HOSTS = 'ansible/hosts'
 	}
 	stages{
         stage('Run Ansible Playbook')

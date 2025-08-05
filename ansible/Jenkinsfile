@@ -8,10 +8,9 @@ pipeline {
 	{
 	   steps{
             sshagent(credentials: ['ansible-key']) {
-		'''     
+		    
                 sh 'ansible -i $HOSTS testserver -m ping'
-		'''
-            }
+		 }
         }
     }
 }
